@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <div class="body" style="display: flex; flex-direction: row">
+    <h1>message count:</h1>
+    <h1 id="websocket"></h1>
+  </div>
+  <div class="body" style="display: flex; flex-direction: row">
+    <h1>message data:</h1>
+    <h1 id="websocket-data"></h1>
+  </div>
+  <body>
+    <script>
+      var count = 0;
+      let socket = new WebSocket("ws://localhost:6969/websocket");
+
+      socket.onopen = () => {
+        console.log("Websocket connection success");
+      };
+
+      socket.onclose = (event) => {
+        console.log("Connections Closed:", event);
+      };
+
+      socket.onmessage = (msg) => {
+        count++;
+        document.getElementById("websocket").innerHTML = count;
+      };
+
+      socket.addEventListener("message", function (event) {
+        document.getElementById("websocket-data").innerHTML = event.data;
+      });
+
+      socket.onerror = (error) => {
+        console.log("error :", event);
+      };
+    </script>
+  </body>
+</html>
